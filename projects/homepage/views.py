@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse, loader
+from datetime import datetime
 
-# Create your views here.
+def index(request):
+    context = {
+        'today': datetime.now()
+    }
+    return render(request, 'homepage/index.html', context)
