@@ -1,0 +1,10 @@
+{% extends "homepage/base.html" %} {% load static %} 
+{% block main_content %}
+    <form class="" action="{% url 'patient_create' %}" method="POST">
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+        {% endif %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit" name="button">Save</button>
+    </form>
+{% endblock main_content %}
