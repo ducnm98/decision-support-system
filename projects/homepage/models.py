@@ -1,9 +1,10 @@
 from django.db import models
 
-# Create your models here.
-class ResultTest(models.Model):
+# Create your models here.   
+class patients(models.Model):
+    name = models.TextField()
     age = models.DecimalField(max_digits=5, decimal_places=2)
-    sex = models.DecimalField(max_digits=5, decimal_places=2)
+    sex = models.BooleanField()
     cp = models.DecimalField(max_digits=5, decimal_places=2)
     trestbps = models.DecimalField(max_digits=5, decimal_places=2)
     chol = models.DecimalField(max_digits=5, decimal_places=2)
@@ -14,12 +15,10 @@ class ResultTest(models.Model):
     oldpeak = models.DecimalField(max_digits=5, decimal_places=2)
     slope = models.DecimalField(max_digits=5, decimal_places=2)
     ca = models.DecimalField(max_digits=5, decimal_places=2)
-    thai = models.DecimalField(max_digits=5, decimal_places=2)
-    num = models.DecimalField(max_digits=5, decimal_places=2)
-    
-class patients(models.Model):
-    name = models.TextField()
-    ResultTest = models.ForeignKey('ResultTest', on_delete=models.CASCADE)
+    thal = models.DecimalField(max_digits=5, decimal_places=2)
+    num = models.DecimalField(max_digits=5, decimal_places=2, default=-1)
+    def __str__(self):
+        return self.name
 
 class Weight(models.Model):
     age = models.DecimalField(max_digits=5, decimal_places=2)

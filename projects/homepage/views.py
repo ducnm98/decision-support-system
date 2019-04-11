@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse, loader, redirect
 from datetime import datetime
 from . import models, forms
+from django.template.context_processors import csrf
+
 
 def index(request):
     context = {
@@ -30,7 +32,5 @@ def patient_create(request):
         if form.is_valid():
             form.save()
             return redirect('patients')
-        else:
-            return render(request, 'homepage/partientsCreate.html', { 'form': form })
-    else:
-        return render(request, 'homepage/partientsCreate.html', { 'form': forms.patientsForm() })
+        return render(request, 'homepage/partientsCreate.html', { 'form': form })
+    return render(request, 'homepage/partientsCreate.html', { 'form': forms.patientsForm() })

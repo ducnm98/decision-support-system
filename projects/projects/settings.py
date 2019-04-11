@@ -38,18 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap4',
-    'data_wizard',
-    'data_wizard.sources'
+    'bootstrap4'
 ]
-
-# This can be omitted to use the defaults
-DATA_WIZARD = {
-    'BACKEND': 'data_wizard.backends.threading',
-    'LOADER': 'data_wizard.loaders.FileLoader',
-    'PERMISSION': 'rest_framework.permissions.IsAdminUser',
-
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

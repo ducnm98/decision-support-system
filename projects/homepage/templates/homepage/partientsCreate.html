@@ -1,6 +1,7 @@
 {% extends "homepage/base.html" %} {% load static %} 
 {% block main_content %}
     <form class="" action="{% url 'patient_create' %}" method="POST">
+        {% csrf_token %}
         {% if form.errors %}
             <p>{{ form.errors }}</p>
         {% endif %}
