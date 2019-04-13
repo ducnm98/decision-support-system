@@ -4,7 +4,7 @@ from django.db import models
 class patients(models.Model):
     name = models.TextField()
     age = models.DecimalField(max_digits=5, decimal_places=2)
-    sex = models.BooleanField()
+    sex = models.DecimalField(max_digits=5, decimal_places=2)
     cp = models.DecimalField(max_digits=5, decimal_places=2)
     trestbps = models.DecimalField(max_digits=5, decimal_places=2)
     chol = models.DecimalField(max_digits=5, decimal_places=2)

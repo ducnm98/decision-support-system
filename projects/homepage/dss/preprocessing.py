@@ -4,6 +4,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder
 from keras.utils import np_utils
 from django_pandas.io import read_frame
+from sklearn.preprocessing import MinMaxScaler
 le = LabelEncoder()
 
 def preprocessing(data, imp_method, scale_method):
@@ -14,10 +15,19 @@ def preprocessing(data, imp_method, scale_method):
     # d = d.replace(b'?', np.nan)
     # # print(d.isnull().any())
 
-
+    # d = np.genfromtxt(data, delimiter=',')
+    # d[:, 13][d[:, 13] > 0] = 1 # label(Y) be 0 or 1
+    # d = pd.DataFrame(d)
+    # # print(d)
+    # d.columns = ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal", "num"]
     d = read_frame(data)
+    d = pd.DataFrame(d)
     d = d[["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal", "num"]]
-    # print(d)
+    d.columns = ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal", "num"]
+    
+    d.loc[d['num'] > 0, ['num']] = 1# label(Y) be 0 or 1
+    print("Data D", d)
+
 
     # missing data
     inds = np.asarray(d.isnull()).nonzero()
@@ -26,7 +36,7 @@ def preprocessing(data, imp_method, scale_method):
     print('imputation method:', imp_method)
     print('scale method: %s' % scale_method)
     d_new = imputation_scale(d, imp_method, scale_method)
-
+    print('d_new', d_new)
     # split X, Y
     d = np.asarray(d_new)
     X = d[:, 0:13].astype(float)
@@ -34,13 +44,15 @@ def preprocessing(data, imp_method, scale_method):
 
     # Y to be 2-class
     encoder_Y = le.fit_transform(Y)
+    print('encoder_Y', encoder_Y)
     Y = np_utils.to_categorical(encoder_Y)  # shape: (:, 2)
-
+    print('Y', Y)
     return X, Y
 
 
 def imputation_scale(data, imp_method, scale_method):
     cols = data.columns
+    print("Cols", cols)
     inds = np.asarray(data.isnull()).nonzero()
     var_name = cols[np.unique(inds[1])]
     data = pd.concat([data.drop(inds[0], axis=0), data.iloc[inds[0]]]).reset_index(drop=True) # rearrange NAN rows to the bottom
@@ -91,8 +103,11 @@ def imputation_scale(data, imp_method, scale_method):
 
 def min_max_scale(data):
     X = data[data.columns.drop('num')]
-    X_scaled = (X-X.min())/(X.max()-X.min())
+    scale = MinMaxScaler()     
+    X_scaled = pd.DataFrame(scale.fit_transform(X.values), columns=X.columns, index=X.index)
+    # X_scaled = (X-X.min())/(X.max()-X.min())
     X_scaled = pd.concat([X_scaled,data['num']],axis=1)
+    print('X_scaled', X_scaled)
     return X_scaled
 def normalisation(data):
     X = data[data.columns.drop('num')]
@@ -186,8 +201,3 @@ class MiceImputer:
 
     def fit_transform(self, X):
         return self.fit(X).transform(X)
-
-
-if __name__ == '__main__':
-    x, y = preprocessing('Z:\Github\idss_pw3\data\processed_data.csv', 'MICE', '')
-    print(x[-3], y[-4])

@@ -1,6 +1,4 @@
-'''
-10-13-2
-'''
+
 import matplotlib.pyplot as plt
 from keras.models import Sequential
 from keras.layers import Dense
@@ -16,16 +14,18 @@ def ANN(X_train, y_train, model_path, isPlot=0, isShow=0):
     # from keras import optimizers
     # sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) # TODO: make sure which optimizer is better here
-    # model.summary()
+    model.summary()
 
     # fit model
-    stop_early = EarlyStopping(monitor='val_loss', patience=20, verbose=0, mode='auto')
+    # stop_early = EarlyStopping(monitor='val_loss', patience=20, verbose=0, mode='auto')
+    print("X_train", X_train)
+    print("y_train", y_train)
     history = model.fit(X_train, y_train, # TODO: make sure how much batch_size is better here
               batch_size = 50,
               epochs = 2000,
               verbose = isShow,
               validation_split = 20/85)  # train(65%)+validation(20%)=train(85%) /test(15%), split train/validation here
-              # callbacks=[stop_early])
+            #   callbacks=[stop_early])
 
     if isPlot != 0:
         # print(history.history.keys()) # list all data in history
