@@ -78,12 +78,7 @@ def predictHF(data, newData):
     #############################
     print('\nEvaluating...')
     eval(model, X_test, y_test, OUTPUT_PATH)
-    
-    d = pd.DataFrame(read_frame(newData))
-    d = d[["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal", "num"]]
-    d.columns = ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal", "num"]
-    
-    # d.loc[d['num'] > 0, ['num']] = 1# label(Y) be 0 or 1
-    predictData = model.predict(d)
-    print(predictData)
+    newData = newData[newData.columns.drop(0)]
+    predictData = model.predict(newData)
+    print('\nResult of predict data',predictData)
     return predictData

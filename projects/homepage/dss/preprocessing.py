@@ -26,7 +26,6 @@ def preprocessing(data, imp_method, scale_method):
     d.columns = ["age", "sex", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "slope", "ca", "thal", "num"]
     
     d.loc[d['num'] > 0, ['num']] = 1# label(Y) be 0 or 1
-    print("Data D", d)
 
 
     # missing data
@@ -36,7 +35,6 @@ def preprocessing(data, imp_method, scale_method):
     print('imputation method:', imp_method)
     print('scale method: %s' % scale_method)
     d_new = imputation_scale(d, imp_method, scale_method)
-    print('d_new', d_new)
     # split X, Y
     d = np.asarray(d_new)
     X = d[:, 0:13].astype(float)
@@ -44,9 +42,7 @@ def preprocessing(data, imp_method, scale_method):
 
     # Y to be 2-class
     encoder_Y = le.fit_transform(Y)
-    print('encoder_Y', encoder_Y)
     Y = np_utils.to_categorical(encoder_Y)  # shape: (:, 2)
-    print('Y', Y)
     return X, Y
 
 

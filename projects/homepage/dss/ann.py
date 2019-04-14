@@ -18,8 +18,6 @@ def ANN(X_train, y_train, model_path, isPlot=0, isShow=0):
 
     # fit model
     # stop_early = EarlyStopping(monitor='val_loss', patience=20, verbose=0, mode='auto')
-    print("X_train", X_train)
-    print("y_train", y_train)
     history = model.fit(X_train, y_train, # TODO: make sure how much batch_size is better here
               batch_size = 50,
               epochs = 2000,
