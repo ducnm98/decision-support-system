@@ -1,6 +1,20 @@
 {% extends "homepage/base.html" %} {% load static %} 
 {% block main_content %}
-    {% autoescape on %}
-        {{ result }}
-    {% endautoescape %}
+    {{ result | safe  }}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{% static 'homepage/doneacc.png' %}" />
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'homepage/doneconfusion_matrix.png' %}" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{% static 'homepage/doneloss.png' %}" />
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'homepage/doneroc_curve.png' %}" />
+        </div>
+    </div>
 {% endblock main_content %}
