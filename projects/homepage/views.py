@@ -6,6 +6,7 @@ import pandas as pd
 from django_pandas.io import read_frame
 import csv
 import os
+from django.db.models import Q
 
 def index(request):
     context = {
@@ -34,6 +35,11 @@ def patient_create(request):
         form = forms.patientsForm(request.POST)
         if form.is_valid():
             patients = models.patients.objects.all()
+            # patientsA = models.patients.objects.exclude(ca=None).exclude(thal=None)
+            # patientsB = models.patients.objects.filter(
+            #     Q(ca__isnull=True) | Q(thal__isnull=True)
+            # )
+            
             name = form.cleaned_data['name']
             age = form.cleaned_data['age']
             sex = form.cleaned_data['sex']
@@ -63,27 +69,92 @@ def patient_create(request):
 
 def setup(request):
     models.patients.objects.all().delete()
-    with open('Z:\Github\decision-support-system\projects\datawizard\processed_data.csv') as csvfile:
+    with open('Z:\Github\decision-support-system\projects\datawizard\processed_data.2.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             print(row['name'])
+            name=row['name']
+            if row['name'] == "None":
+                name=None
+            age=row['age']
+            if row['age'] == "None":
+                age=None
+            sex=row['sex']
+            if row['sex'] == "None":
+                sex=None
+            cp=row['cp']
+            if row['cp'] == "None":
+                cp=None
+            trestbps=row['trestbps']
+            if row['trestbps'] == "None":
+                trestbps=None
+            chol=row['chol']
+            if row['chol'] == "None":
+                chol=None
+            fbs=row['fbs']
+            if row['fbs'] == "None":
+                fbs=None
+            restecg=row['restecg']
+            if row['restecg'] == "None":
+                restecg=None
+            thalach=row['thalach']
+            if row['thalach'] == "None":
+                thalach=None
+            exang=row['exang']
+            if row['exang'] == "None":
+                exang=None
+            oldpeak=row['oldpeak']
+            if row['oldpeak'] == "None":
+                oldpeak=None
+            exang=row['exang']
+            if row['exang'] == "None":
+                exang=None
+            slope=row['slope']
+            if row['slope'] == "None":
+                slope=None
+            ca=row['ca']
+            if row['ca'] == "None":
+                ca=None
+            thal=row['thal']
+            if row['thal'] == "None":
+                thal=None
+            num=row['num']
+            if row['num'] == "None":
+                num=None
             p = models.patients(
-                name=row['name'],
-                age=row['age'],
-                sex=row['sex'],
-                cp=row['cp'],
-                trestbps=row['trestbps'],
-                chol=row['chol'],
-                fbs=row['fbs'],
-                restecg=row['restecg'],
-                thalach=row['thalach'],
-                exang=row['exang'],
-                oldpeak=row['oldpeak'],
-                slope=row['slope'],
-                ca=row['ca'],
-                thal=row['thal'],
-                num=row['num'],
+                name=name,
+                age=age,
+                sex=sex,
+                cp=cp,
+                trestbps=trestbps,
+                chol=chol,
+                fbs=fbs,
+                restecg=restecg,
+                thalach=thalach,
+                exang=exang,
+                oldpeak=oldpeak,
+                slope=slope,
+                ca=ca,
+                thal=thal,
+                num=num,
             )
+            # p = models.patients(
+            #     name=row['name'],
+            #     age=row['age'],
+            #     sex=row['sex'],
+            #     cp=row['cp'],
+            #     trestbps=row['trestbps'],
+            #     chol=row['chol'],
+            #     fbs=row['fbs'],
+            #     restecg=row['restecg'],
+            #     thalach=row['thalach'],
+            #     exang=row['exang'],
+            #     oldpeak=row['oldpeak'],
+            #     slope=row['slope'],
+            #     ca=row['ca'],
+            #     thal=row['thal'],
+            #     num=row['num'],
+            # )
             p.save()
     patients = models.patients.objects.all()
     context = {
