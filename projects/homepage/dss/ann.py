@@ -23,7 +23,7 @@ def ANN(X_train, y_train, model_path, isPlot=0, isShow=0):
               epochs = 2000,
               verbose = isShow,
               validation_split = 20/85)  # train(65%)+validation(20%)=train(85%) /test(15%), split train/validation here
-            #   callbacks=[stop_early])
+              # callbacks=[stop_early])
 
     if isPlot != 0:
         # print(history.history.keys()) # list all data in history
