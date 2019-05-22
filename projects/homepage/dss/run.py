@@ -18,7 +18,7 @@ SCALE_M = 'min_max'
 seed = 1
 np.random.seed(seed)
 W_PATH = 'Z:\Github\idss_pw3\data\weights'
-OUTPUT_PATH = 'Z:\Github\decision-support-system\projects\homepage\static\homepage'
+OUTPUT_PATH = 'Z:\Github\decision-support-system\projects\homepage\static\homepage\ '
 MODEL_PATH = 'Z:\Github\decision-support-system\projects\homepage\dss\done\ANNmodel.h5'
 
 def predictHF(data, newData):

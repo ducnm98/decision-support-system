@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 
-class_names = ['HF presence', 'HF absence']
+class_names = ['HF absence', 'HF presence']
 
 def eval(model, X, y, output_path):
     prediction = model.predict(X)
